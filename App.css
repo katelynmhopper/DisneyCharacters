@@ -1,0 +1,23 @@
+.App {
+  text-align: center;
+}
+
+li {
+  list-style-type: none; 
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+
+.character {
+  background-color: FloralWhite; 
+  text-align: left; 
+}
+
+.container {
+  display: flex; 
+  flex-direction: column; 
+  background-color: CornFlowerBlue;
+}
