@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Character } from './components/Character';
-import ReactBootstrap from "react"; 
 import './App.css'; 
 
-const Pagination = ({ data, pageSize, onPageChange}) => {
-    const { Button } = ReactBootstrap; 
+const Pagination = ({ data, pageSize, onPageChange }) => {
     if (data.length <= 1) return null; 
 
     let num = Math.ceil(data.length / pageSize);
     let pages = range(1, num + 1); 
+    console.log(pages)
     const list = pages.map(page => {
-        return( 
-            <Button key={page} onClick={onPageChange} className="page-item">{page}
-            </Button>
+        console.log('>>>>', page)
+        return ( 
+            <button key={page} onClick={onPageChange} className="page-item">{page}</button>
         );
     });
+
     return ( 
         <nav> 
             <ul className="pagination">{list}</ul>
@@ -54,31 +54,32 @@ const pageSize = 100;
 const handlePageChange = e => { 
     setCurrentPage(Number(e.target.textContent));
 };
-let page = data; 
-if (page.length >= 1) {
-    page = paginate(page, currentPage, pageSize);
+let page = data;
+if (page.length >=1 && loaded) {
+    page = paginate(data, currentPage, pageSize);
     console.log(`currentPage: ${currentPage}`);
 }
 
+
 return (
-<React.Fragment>
-
-
-<div className="container">
-<ul>
-{data.map(data => (
-<li>
-<Character name={data.name} films={data.films} tvShows={data.tvShows} />
-</li>
-))}
-</ul>
-<Pagination 
-    data={data.hits}
-    pageSize={pageSize}
-    onPageChange={handlePageChange}
-    ></Pagination>
-</div>
-</React.Fragment>
+    <React.Fragment>
+        <div className="container">
+            <ul>
+                {page.map(page=> (
+                    <li>
+                        <Character name={page.name} films={page.films} tvShows={page.tvShows} />
+                    </li>
+                ))}
+            </ul>
+            {loaded && (
+                <Pagination 
+                    data={page}
+                    pageSize={pageSize}
+                    onPageChange={handlePageChange}
+                ></Pagination>
+            )}
+        </div>
+    </React.Fragment>
 );
 }
 
