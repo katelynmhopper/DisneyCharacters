@@ -6,9 +6,9 @@ import './App.css';
 const Pagination = ({ data, pageSize, onPageChange }) => {
     console.log('>>>>>', data)
     if (data.length <= 1) return null; 
-    let num = Math.ceil(data.length / pageSize);
+
     //console.log('>>>>', num)
-    let pages = range(1, num + 1); 
+    let pages = range(1, data.length + 1); 
     const list = pages.map(page => {
         return ( 
             <button key={page} onClick={onPageChange} className="page-item">{page}</button>
@@ -35,13 +35,13 @@ function paginate(data, pageNumber, pageSize) {
     return page; 
 }
 
+const pageSize = 5; 
 
 function App() {
     const [data, setData] = useState([]);
     const [loaded, setLoaded] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     
-    const pageSize = 10; 
 
     useEffect(() => {
         async function fetchData() {
