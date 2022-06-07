@@ -3,13 +3,12 @@ import { Character } from './components/Character';
 import './App.css'; 
 
 const Pagination = ({ data, pageSize, onPageChange }) => {
+   // console.log('>>>>>', data)
     if (data.length <= 1) return null; 
-
+    
     let num = Math.ceil(data.length / pageSize);
     let pages = range(1, num + 1); 
-    console.log(pages)
     const list = pages.map(page => {
-        console.log('>>>>', page)
         return ( 
             <button key={page} onClick={onPageChange} className="page-item">{page}</button>
         );
@@ -25,20 +24,22 @@ const Pagination = ({ data, pageSize, onPageChange }) => {
 const range = (start, end) => {
     return Array(end - start + 1)
         .fill(0)
-        .map((page, i) => start + i);
-};
+        .map((data, i) => start + i);
+    };
+
+
 function paginate(data, pageNumber, pageSize) {
     const start = (pageNumber - 1) * pageSize; 
     let page = data.slice(start, start + pageSize); 
     return page; 
 }
 
+const pageSize = 10; 
 
 function App() {
 const [data, setData] = useState([]);
 const [loaded, setLoaded] = useState(false);
 const [currentPage, setCurrentPage] = useState(1);
-const pageSize = 5; 
 
     useEffect(() => {
         async function fetchData() {
@@ -50,22 +51,23 @@ const pageSize = 5;
         fetchData();
     },[])
     console.log('loaded:', loaded, 'data:', data);
-
-const handlePageChange = e => { 
-    setCurrentPage(Number(e.target.textContent));
-};
-let page = data;
-if (page.length >=1 && loaded) {
-    page = paginate(data, currentPage, pageSize);
-    console.log(`currentPage: ${currentPage}`);
-}
-
+    
+    const handlePageChange = (e) => { 
+        setCurrentPage(Number(e.target.textContent));
+    };
+    let page = data;
+    if (page.length >=1 && loaded) {
+        page = paginate(data, currentPage, pageSize);
+       // console.log(`currentPage: ${currentPage}`);
+    }
+    
+    
 
 return (
     <React.Fragment>
         <div className="container">
-            <ul>
-                {page.map(page=> (
+            <ul className="list-group">
+                {data.map(page=> (
                     <li>
                         <Character name={page.name} films={page.films} tvShows={page.tvShows} />
                     </li>

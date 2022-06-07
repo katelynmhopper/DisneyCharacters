@@ -1,5 +1,5 @@
 import React from 'react';
-export const Character = ({ name, films, tvShows }) => {
+export const Character = ({ name, films, tvShows, id }) => {
     console.log( name, films, tvShows)
     return ( <>
         <h3>{name}</h3> 
