@@ -4,10 +4,9 @@ import './App.css';
 
 
 const Pagination = ({ data, pageSize, onPageChange }) => {
-    console.log('>>>>>', data)
-    if (data.length <= 1) return null; 
+ 
+    
 
-    //console.log('>>>>', num)
     let pages = range(1, data.length + 1); 
     const list = pages.map(page => {
         return ( 
@@ -26,6 +25,7 @@ const range = (start, end) => {
     return Array(end - start + 1)
     .fill(0)
     .map((data, i) => start + i);
+
 };
 
 
@@ -35,7 +35,7 @@ function paginate(data, pageNumber, pageSize) {
     return page; 
 }
 
-const pageSize = 5; 
+const pageSize = 6; 
 
 function App() {
     const [data, setData] = useState([]);
