@@ -2,20 +2,21 @@ import React, { useEffect, useState } from "react";
 import { Character } from './components/Character';
 import './App.css'; 
 
+
 const Pagination = ({ data, pageSize, onPageChange }) => {
-   // console.log('>>>>>', data)
+    console.log('>>>>>', data)
     if (data.length <= 1) return null; 
-    
     let num = Math.ceil(data.length / pageSize);
+    //console.log('>>>>', num)
     let pages = range(1, num + 1); 
     const list = pages.map(page => {
         return ( 
             <button key={page} onClick={onPageChange} className="page-item">{page}</button>
-        );
-    });
-
-    return ( 
-        <nav> 
+            );
+        });
+        
+        return ( 
+            <nav> 
             <ul className="pagination">{list}</ul>
         </nav>
     );
@@ -23,9 +24,9 @@ const Pagination = ({ data, pageSize, onPageChange }) => {
 
 const range = (start, end) => {
     return Array(end - start + 1)
-        .fill(0)
-        .map((data, i) => start + i);
-    };
+    .fill(0)
+    .map((data, i) => start + i);
+};
 
 
 function paginate(data, pageNumber, pageSize) {
@@ -34,12 +35,13 @@ function paginate(data, pageNumber, pageSize) {
     return page; 
 }
 
-const pageSize = 10; 
 
 function App() {
-const [data, setData] = useState([]);
-const [loaded, setLoaded] = useState(false);
-const [currentPage, setCurrentPage] = useState(1);
+    const [data, setData] = useState([]);
+    const [loaded, setLoaded] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    
+    const pageSize = 10; 
 
     useEffect(() => {
         async function fetchData() {
@@ -50,6 +52,7 @@ const [currentPage, setCurrentPage] = useState(1);
         }
         fetchData();
     },[])
+    
     console.log('loaded:', loaded, 'data:', data);
     
     const handlePageChange = (e) => { 
@@ -58,7 +61,7 @@ const [currentPage, setCurrentPage] = useState(1);
     let page = data;
     if (page.length >=1 && loaded) {
         page = paginate(data, currentPage, pageSize);
-       // console.log(`currentPage: ${currentPage}`);
+       console.log(`currentPage: ${currentPage}`);
     }
     
     
@@ -67,9 +70,9 @@ return (
     <React.Fragment>
         <div className="container">
             <ul className="list-group">
-                {data.map(page=> (
+                {page.map(data=> (
                     <li>
-                        <Character name={page.name} films={page.films} tvShows={page.tvShows} />
+                        <Character name={data.name} films={data.films} tvShows={data.tvShows} />
                     </li>
                 ))}
             </ul>
